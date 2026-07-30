@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+
+const featuredProjects = [
+  {
+    title: 'Search Engine Tool MCP',
+    description: 'A secure, multi-provider web search and extraction MCP server for Codex, Trae, and other MCP-compatible clients.',
+    tags: ['Python', 'FastMCP', 'DDGS', 'SearXNG'],
+    href: '/projects/search-engine-tool-mcp',
+    github: 'https://github.com/YiHarvest/search-engine-tool-mcp',
+  },
+  {
+    title: 'PPT Design',
+    description: 'A Codex plugin for creating animated HTML presentations and genuinely editable PowerPoint decks.',
+    tags: ['Codex Plugin', 'HTML Slides', 'PPTX'],
+    href: '/projects/ppt-design',
+    github: 'https://github.com/YiHarvest/ppt-design',
+  },
+  {
+    title: 'HemoPain',
+    description: 'Biomedical machine learning for chronic pain classification using blood biomarkers and clinical variables.',
+    tags: ['Machine Learning', 'Biomedical', 'Bootstrap'],
+    href: '/projects/hemopain',
+    github: 'https://github.com/YiHarvest/hemopain',
+  },
+];
+
+const researchInterests = [
+  'Biomedical ML',
+  'Knowledge Graph',
+  'Agent Workflows',
+];
+---
+
+<BaseLayout title="YiHarvest">
+  <Navigation slot="navigation" />
+
+  <Hero />
+
+  <Section title="Featured Projects" id="projects">
+    <ProjectGrid>
+      {featuredProjects.map(project => (
+        <ProjectCard {...project} />
+      ))}
+    </ProjectGrid>
+  </Section>
+
+  <Section title="Research Interests" id="research">
+    <div class="flex flex-wrap gap-6 text-base">
+      {researchInterests.map(interest => (
+        <span class="text-[var(--color-text-secondary)]">
+          {interest}
+        </span>
+      ))}
+    </div>
+  </Section>
+
+  <Section title="Contact" id="contact">
+    <div class="flex flex-wrap gap-6 text-sm">
+      <a href="mailto:yiharvest@example.com" class="link-accent">Email</a>
+      <a href="https://github.com/YiHarvest" class="link-accent">GitHub</a>
+      <a href="https://linkedin.com/in/yiharvest" class="link-accent">LinkedIn</a>
+    </div>
+  </Section>
+
+  <Footer slot="footer" />
+</BaseLayout>

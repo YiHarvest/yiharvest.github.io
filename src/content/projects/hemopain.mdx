@@ -1,0 +1,39 @@
+---
+title: HemoPain
+description: Biomedical machine learning for chronic pain classification using blood biomarkers and clinical variables.
+tags: ['Machine Learning', 'Biomedical', 'Bootstrap', 'Model Calibration']
+github: 'https://github.com/YiHarvest/hemopain'
+---
+
+## 背景
+
+慢性疼痛是影响生活质量的常见问题。通过血液生物标志物和临床变量，可以构建预测模型辅助临床决策。
+
+## 技术架构
+
+采用经典的机器学习流程：
+
+- **数据预处理**: 缺失值处理、特征工程
+- **模型选择**: 多种分类器比较（LR, RF, XGBoost）
+- **评估指标**: AUROC、敏感性、特异性、校准曲线
+- **不确定性量化**: Bootstrap 置信区间
+
+## 关键特性
+
+### 模型校准
+
+使用校准曲线评估预测概率的可靠性，确保模型输出可用于临床决策。
+
+### 临床评价指标
+
+除了统计指标，还计算了临床需要的敏感性/特异性阈值下的阳性和阴性预测值。
+
+### 解释性
+
+通过 SHAP 值分析特征贡献，提供临床可解释性。
+
+## 成果
+
+- 构建了可解释的疼痛分类模型
+- 提供了完整的模型比较和评估流程
+- 模型校准良好，预测概率可靠

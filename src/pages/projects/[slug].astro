@@ -1,0 +1,60 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.id.replace(/\.mdx$/, '') },
+    props: { project },
+  }));
+}
+
+type Props = {
+  project: CollectionEntry<'projects'>;
+};
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+  <Navigation slot="navigation" />
+
+  <article class="max-w-[896px] mx-auto px-6 py-24">
+    <header class="mb-12">
+      <h1 class="text-4xl font-semibold tracking-tight mb-4">
+        {project.data.title}
+      </h1>
+      <p class="text-lg text-[var(--color-text-secondary)] mb-6 leading-relaxed">
+        {project.data.description}
+      </p>
+      <div class="flex flex-wrap gap-2 mb-6">
+        {project.data.tags.map(tag => (
+          <span class="text-xs px-2 py-1 rounded bg-[var(--color-border)] text-[var(--color-text-secondary)]">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <div class="flex flex-wrap gap-4 text-sm">
+        {project.data.github && (
+          <a href={project.data.github} class="link-accent font-medium">GitHub</a>
+        )}
+        {project.data.pypi && (
+          <a href={project.data.pypi} class="link-accent font-medium">PyPI</a>
+        )}
+        {project.data.docs && (
+          <a href={project.data.docs} class="link-accent font-medium">文档</a>
+        )}
+      </div>
+    </header>
+
+    <div class="prose prose-neutral dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+</BaseLayout>

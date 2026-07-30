@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import Section from '../../components/Section.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+---
+
+<BaseLayout title="Projects">
+  <Navigation slot="navigation" />
+
+  <Section title="Projects">
+    <ProjectGrid>
+      {projects.map(project => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          tags={project.data.tags}
+          href={`/projects/${project.id.replace(/\.mdx$/, '')}`}
+          github={project.data.github}
+        />
+      ))}
+    </ProjectGrid>
+  </Section>
+
+  <Footer slot="footer" />
+</BaseLayout>

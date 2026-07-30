@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #1B4332;
+  --color-forest-light: #2D6A4F;
+  --color-bg: #F6F6F3;
+  --color-card: #FFFFFF;
+  --color-border: #EAEAEA;
+  --color-text: #111111;
+  --color-text-secondary: #666666;
+
+  --font-family-sans: 'Geist', system-ui, sans-serif;
+
+  --max-width-content: 896px;
+}
+
+@layer base {
+  :root {
+    --color-bg: #F6F6F3;
+    --color-card: #FFFFFF;
+    --color-border: #EAEAEA;
+    --color-text: #111111;
+    --color-text-secondary: #666666;
+    --color-accent: #1B4332;
+  }
+
+  .dark {
+    --color-bg: #0A0A0A;
+    --color-card: #171717;
+    --color-border: #262626;
+    --color-text: #FAFAFA;
+    --color-text-secondary: #A3A3A3;
+    --color-accent: #2D6A4F;
+  }
+
+  body {
+    @apply bg-[var(--color-bg)] text-[var(--color-text)] antialiased;
+    font-feature-settings: 'ss01', 'ss03';
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-[var(--color-card)] border border-[var(--color-border)] rounded-lg p-6;
+  }
+
+  .link-accent {
+    @apply text-[var(--color-accent)] hover:underline underline-offset-4 transition-colors;
+  }
+}

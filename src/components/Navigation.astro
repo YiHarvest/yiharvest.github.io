@@ -1,0 +1,36 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: '/notes', label: 'Notes' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur-sm border-b border-[var(--color-border)]">
+  <div class="max-w-[896px] mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="text-lg font-semibold tracking-tight hover:text-[var(--color-accent)] transition-colors">
+      YiHarvest
+    </a>
+
+    <div class="flex items-center gap-6">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class:list={[
+            'text-sm transition-colors',
+            currentPath.startsWith(link.href)
+              ? 'text-[var(--color-accent)]'
+              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <ThemeToggle />
+    </div>
+  </div>
+</nav>

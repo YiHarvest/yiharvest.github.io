@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import Section from '../../components/Section.astro';
+import { getCollection } from 'astro:content';
+
+const notes = await getCollection('notes');
+const sortedNotes = notes.sort((a, b) =>
+  new Date(b.data.publishedAt).valueOf() - new Date(a.data.publishedAt).valueOf()
+);
+---
+
+<BaseLayout title="Notes">
+  <Navigation slot="navigation" />
+
+  <Section title="Notes">
+    {sortedNotes.length === 0 ? (
+      <p class="text-[var(--color-text-secondary)]">暂无文章</p>
+    ) : (
+      <div class="space-y-6">
+        {sortedNotes.map(note => (
+          <article class="card">
+            <time class="text-sm text-[var(--color-text-secondary)]">
+              {new Date(note.data.publishedAt).toLocaleDateString('zh-CN')}
+            </time>
+            <h3 class="text-lg font-medium mt-2 mb-2">
+              <a href={`/notes/${note.id.replace(/\.mdx$/, '')}`} class="hover:text-[var(--color-accent)] transition-colors">
+                {note.data.title}
+              </a>
+            </h3>
+            {note.data.description && (
+              <p class="text-sm text-[var(--color-text-secondary)]">
+                {note.data.description}
+              </p>
+            )}
+          </article>
+        ))}
+      </div>
+    )}
+  </Section>
+
+  <Footer slot="footer" />
+</BaseLayout>
