@@ -5,40 +5,63 @@ import Footer from '../components/Footer.astro';
 import Section from '../components/Section.astro';
 ---
 
-<BaseLayout title="About">
+<BaseLayout
+  title="About"
+  description="关于 YiHarvest 的研究方向、工作方式与技术关注。"
+  image="/images/editorial-texture.webp"
+>
   <Navigation slot="navigation" />
 
-  <article class="max-w-[896px] mx-auto px-6 py-24">
-    <h1 class="text-4xl font-semibold tracking-tight mb-8">About</h1>
-
-    <div class="space-y-6 text-[var(--color-text-secondary)] leading-relaxed">
-      <p>
-        我是 YiHarvest，一名专注于 AI Agent、MCP 工具开发和生物医学机器学习的工程师。
-      </p>
-
-      <p>
-        我的研究兴趣包括：
-      </p>
-
-      <ul class="list-disc list-inside space-y-2 ml-4">
-        <li>Biomedical Machine Learning: 将机器学习应用于临床问题，关注模型可解释性和临床实用性</li>
-        <li>Knowledge Graph: 构建和利用知识图谱支持推理和决策</li>
-        <li>Agent Workflows: 设计和实现 AI Agent 工作流，提升自动化效率</li>
-      </ul>
-
-      <p>
-        技术栈包括 Python、FastAPI、PyTorch、Docker，熟悉 MCP 协议和 Agent 开发。
-      </p>
-    </div>
-
-    <Section title="联系方式">
-      <div class="flex flex-wrap gap-6">
-        <a href="mailto:yiharvest@example.com" class="link-accent">Email</a>
-        <a href="https://github.com/YiHarvest" class="link-accent">GitHub</a>
-        <a href="https://linkedin.com/in/yiharvest" class="link-accent">LinkedIn</a>
+  <header class="about-hero">
+    <div class="about-hero__inner">
+      <div class="about-hero__copy" data-reveal>
+        <p class="eyebrow">About YiHarvest</p>
+        <h1>研究问题，也构建工具。</h1>
+        <p>专注 AI Agent、MCP 工具开发和生物医学机器学习。重视可复现性、清晰边界与真实使用体验。</p>
       </div>
-    </Section>
-  </article>
+      <figure class="editorial-art" data-page-art="about" data-reveal>
+        <img
+          src="/images/editorial-texture.webp"
+          alt="Forest-green filaments passing through translucent research materials"
+          width="1536"
+          height="1024"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </header>
+
+  <Section
+    title="How I work"
+    description="不追逐复杂本身。先理解问题，再选择足够好的技术。"
+  >
+    <div class="principle-grid">
+      <article class="principle" data-reveal>
+        <h3>Research grounded</h3>
+        <p>从数据来源、评价指标和使用语境开始，而不是从模型名称开始。</p>
+      </article>
+      <article class="principle" data-reveal>
+        <h3>Systems thinking</h3>
+        <p>把检索、工具调用、安全边界、验证与交付看成一套完整系统。</p>
+      </article>
+      <article class="principle" data-reveal>
+        <h3>Useful craft</h3>
+        <p>界面、文档和默认值同样属于工程质量。</p>
+      </article>
+    </div>
+  </Section>
+
+  <Section
+    title="Technical focus"
+    description="Python、FastAPI、PyTorch、Docker，以及围绕 MCP 和 Agent 工作流的工具链。"
+  >
+    <div class="contact-panel" data-reveal>
+      <h2>查看正在构建的项目。</h2>
+      <div class="contact-panel__action">
+        <a href="/projects" class="button button--primary">浏览项目</a>
+      </div>
+    </div>
+  </Section>
 
   <Footer slot="footer" />
 </BaseLayout>

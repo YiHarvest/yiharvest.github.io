@@ -2,12 +2,17 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-[var(--color-border)] py-8">
-  <div class="max-w-[896px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--color-text-secondary)]">
-    <p>YiHarvest {year}</p>
-    <div class="flex items-center gap-6">
-      <a href="https://github.com/YiHarvest" class="hover:text-[var(--color-text)] transition-colors">GitHub</a>
-      <a href="mailto:yiharvest@example.com" class="hover:text-[var(--color-text)] transition-colors">Email</a>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <a href="/" class="site-footer__brand">YiHarvest</a>
+      <p>AI systems, research tools, and thoughtful automation.</p>
     </div>
+    <div class="site-footer__links">
+      <a href="/projects">Projects</a>
+      <a href="/notes">Notes</a>
+      <a href="https://github.com/YiHarvest" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+    <p class="site-footer__meta">{year}</p>
   </div>
 </footer>

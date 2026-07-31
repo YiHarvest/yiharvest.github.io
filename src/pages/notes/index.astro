@@ -11,30 +11,49 @@ const sortedNotes = notes.sort((a, b) =>
 );
 ---
 
-<BaseLayout title="Notes">
+<BaseLayout
+  title="Notes"
+  description="关于 AI Agent、研究工具和构建过程的笔记。"
+  image="/images/editorial-texture.webp"
+>
   <Navigation slot="navigation" />
 
-  <Section title="Notes">
+  <header class="notes-hero">
+    <div class="notes-hero__inner">
+      <div class="notes-hero__copy" data-reveal>
+        <p class="eyebrow">Notes</p>
+        <h1>过程中的判断与记录。</h1>
+        <p>关于 AI Agent、研究方法、工具设计，以及把想法变成可靠系统的过程。</p>
+      </div>
+      <figure class="editorial-art" data-page-art="notes" data-reveal>
+        <img
+          src="/images/editorial-texture.webp"
+          alt="Abstract research material with forest-green filaments"
+          width="1536"
+          height="1024"
+        />
+      </figure>
+    </div>
+  </header>
+
+  <Section class="section--compact">
     {sortedNotes.length === 0 ? (
-      <p class="text-[var(--color-text-secondary)]">暂无文章</p>
+      <div class="contact-panel" data-reveal>
+        <h2>新的笔记正在整理。</h2>
+      </div>
     ) : (
-      <div class="space-y-6">
+      <div class="notes-list">
         {sortedNotes.map(note => (
-          <article class="card">
-            <time class="text-sm text-[var(--color-text-secondary)]">
+          <a href={`/notes/${note.id.replace(/\.mdx$/, '')}`} class="note-row" data-reveal>
+            <time datetime={new Date(note.data.publishedAt).toISOString()}>
               {new Date(note.data.publishedAt).toLocaleDateString('zh-CN')}
             </time>
-            <h3 class="text-lg font-medium mt-2 mb-2">
-              <a href={`/notes/${note.id.replace(/\.mdx$/, '')}`} class="hover:text-[var(--color-accent)] transition-colors">
-                {note.data.title}
-              </a>
-            </h3>
-            {note.data.description && (
-              <p class="text-sm text-[var(--color-text-secondary)]">
-                {note.data.description}
-              </p>
-            )}
-          </article>
+            <div>
+              <h2>{note.data.title}</h2>
+              {note.data.description && <p>{note.data.description}</p>}
+            </div>
+            <span class="note-row__action">阅读</span>
+          </a>
         ))}
       </div>
     )}

@@ -1,18 +1,21 @@
 ---
 interface Props {
   title?: string;
+  description?: string;
   id?: string;
+  class?: string;
 }
 
-const { title, id } = Astro.props;
+const { title, description, id, class: className } = Astro.props;
 ---
 
-<section id={id} class="py-16 sm:py-24">
-  <div class="max-w-[896px] mx-auto px-6">
+<section id={id} class:list={['section', className]}>
+  <div class="section__inner">
     {title && (
-      <h2 class="text-2xl font-semibold tracking-tight mb-8">
-        {title}
-      </h2>
+      <header class="section__header" data-reveal>
+        <h2>{title}</h2>
+        {description && <p>{description}</p>}
+      </header>
     )}
     <slot />
   </div>

@@ -20,29 +20,29 @@ const { note } = Astro.props;
 const { Content } = await render(note);
 ---
 
-<BaseLayout title={note.data.title} description={note.data.description}>
+<BaseLayout
+  title={note.data.title}
+  description={note.data.description}
+  image="/images/editorial-texture.webp"
+>
   <Navigation slot="navigation" />
 
-  <article class="max-w-[896px] mx-auto px-6 py-24">
-    <header class="mb-12">
-      <time class="text-sm text-[var(--color-text-secondary)]">
+  <header class="note-hero">
+    <div class="note-hero__inner" data-reveal>
+      <time datetime={new Date(note.data.publishedAt).toISOString()}>
         {new Date(note.data.publishedAt).toLocaleDateString('zh-CN')}
       </time>
-      <h1 class="text-4xl font-semibold tracking-tight mt-2 mb-4">
-        {note.data.title}
-      </h1>
+      <h1>{note.data.title}</h1>
       {note.data.tags && (
-        <div class="flex flex-wrap gap-2">
-          {note.data.tags.map(tag => (
-            <span class="text-xs px-2 py-1 rounded bg-[var(--color-border)] text-[var(--color-text-secondary)]">
-              {tag}
-            </span>
-          ))}
+        <div class="tag-list" aria-label="Note tags">
+          {note.data.tags.map(tag => <span>{tag}</span>)}
         </div>
       )}
-    </header>
+    </div>
+  </header>
 
-    <div class="prose prose-neutral dark:prose-invert max-w-none">
+  <article class="note-article">
+    <div class="rich-text">
       <Content />
     </div>
   </article>
