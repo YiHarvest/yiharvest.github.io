@@ -14,6 +14,8 @@ const featuredProjects = [
     tags: ['Python', 'FastMCP', 'DDGS', 'SearXNG'],
     href: '/projects/search-engine-tool-mcp',
     github: 'https://github.com/YiHarvest/search-engine-tool-mcp',
+    image: '/images/projects/search-engine-tool-mcp.webp',
+    imageAlt: 'Search Engine Tool MCP interface mockup',
   },
   {
     title: 'PPT Design',
@@ -21,6 +23,8 @@ const featuredProjects = [
     tags: ['Codex Plugin', 'HTML Slides', 'PPTX'],
     href: '/projects/ppt-design',
     github: 'https://github.com/YiHarvest/ppt-design',
+    image: '/images/projects/ppt-design.webp',
+    imageAlt: 'PPT Design presentation editor interface mockup',
   },
   {
     title: 'HemoPain',
@@ -28,13 +32,9 @@ const featuredProjects = [
     tags: ['Machine Learning', 'Biomedical', 'Bootstrap'],
     href: '/projects/hemopain',
     github: 'https://github.com/YiHarvest/hemopain',
+    image: '/images/projects/hemopain.webp',
+    imageAlt: 'HemoPain biomedical analytics interface mockup',
   },
-];
-
-const researchInterests = [
-  'Biomedical ML',
-  'Knowledge Graph',
-  'Agent Workflows',
 ];
 ---
 
@@ -43,29 +43,52 @@ const researchInterests = [
 
   <Hero />
 
-  <Section title="Featured Projects" id="projects">
+  <Section
+    title="Selected work"
+    description="为真实研究与创作流程构建的工具。每个项目都从一个明确问题开始。"
+    id="projects"
+  >
     <ProjectGrid>
-      {featuredProjects.map(project => (
-        <ProjectCard {...project} />
+      {featuredProjects.map((project, index) => (
+        <ProjectCard {...project} featured={index === 0} />
       ))}
     </ProjectGrid>
   </Section>
 
-  <Section title="Research Interests" id="research">
-    <div class="flex flex-wrap gap-6 text-base">
-      {researchInterests.map(interest => (
-        <span class="text-[var(--color-text-secondary)]">
-          {interest}
-        </span>
-      ))}
+  <Section
+    title="Research interests"
+    description="技术选择服务于问题，而不是反过来。"
+    id="research"
+  >
+    <div class="capability-grid">
+      <article class="capability" data-reveal>
+        <h3 class="capability__title">Biomedical ML</h3>
+        <p class="capability__body">关注可解释性、校准与临床实用性，让模型输出经得起真实研究语境。</p>
+      </article>
+      <article class="capability" data-reveal>
+        <h3 class="capability__title">Knowledge Graph</h3>
+        <p class="capability__body">组织复杂知识，支持检索、推理与可追溯决策。</p>
+      </article>
+      <article class="capability" data-reveal>
+        <h3 class="capability__title">Agent Workflows</h3>
+        <p class="capability__body">把工具调用、验证和交付串成可靠自动化流程。</p>
+      </article>
     </div>
   </Section>
 
-  <Section title="Contact" id="contact">
-    <div class="flex flex-wrap gap-6 text-sm">
-      <a href="mailto:yiharvest@example.com" class="link-accent">Email</a>
-      <a href="https://github.com/YiHarvest" class="link-accent">GitHub</a>
-      <a href="https://linkedin.com/in/yiharvest" class="link-accent">LinkedIn</a>
+  <Section id="contact" class="section--compact">
+    <div class="contact-panel" data-reveal>
+      <h2>一起做有用的东西。</h2>
+      <div class="contact-panel__action">
+        <a
+          href="https://github.com/YiHarvest"
+          class="button button--primary"
+          target="_blank"
+          rel="noreferrer"
+        >
+          访问 GitHub
+        </a>
+      </div>
     </div>
   </Section>
 

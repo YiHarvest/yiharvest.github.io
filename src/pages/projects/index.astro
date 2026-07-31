@@ -8,20 +8,33 @@ import ProjectGrid from '../../components/ProjectGrid.astro';
 import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects');
+const orderedProjects = projects.sort((a, b) =>
+  a.data.title === 'Search Engine Tool MCP' ? -1 : b.data.title === 'Search Engine Tool MCP' ? 1 : 0
+);
 ---
 
-<BaseLayout title="Projects">
+<BaseLayout title="Projects" description="YiHarvest 的 AI Agent、研究工具与自动化项目。">
   <Navigation slot="navigation" />
 
-  <Section title="Projects">
+  <header class="page-intro">
+    <div class="page-intro__inner" data-reveal>
+      <h1>Projects</h1>
+      <p class="page-intro__lede">从搜索基础设施到生物医学模型，项目围绕可靠性、可解释性与实际使用展开。</p>
+    </div>
+  </header>
+
+  <Section class="section--compact">
     <ProjectGrid>
-      {projects.map(project => (
+      {orderedProjects.map((project, index) => (
         <ProjectCard
           title={project.data.title}
           description={project.data.description}
           tags={project.data.tags}
           href={`/projects/${project.id.replace(/\.mdx$/, '')}`}
+          image={project.data.image}
+          imageAlt={project.data.imageAlt}
           github={project.data.github}
+          featured={index === 0}
         />
       ))}
     </ProjectGrid>

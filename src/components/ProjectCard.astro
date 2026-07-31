@@ -4,32 +4,50 @@ interface Props {
   description: string;
   tags: string[];
   href: string;
+  image: string;
+  imageAlt: string;
   github?: string;
+  featured?: boolean;
 }
 
-const { title, description, tags, href, github } = Astro.props;
+const {
+  title,
+  description,
+  tags,
+  href,
+  image,
+  imageAlt,
+  github,
+  featured = false,
+} = Astro.props;
 ---
 
-<article class="card group hover:border-[var(--color-accent)]/30 transition-colors">
-  <h3 class="text-lg font-medium mb-2 group-hover:text-[var(--color-accent)] transition-colors">
-    <a href={href}>{title}</a>
-  </h3>
-  <p class="text-sm text-[var(--color-text-secondary)] mb-4 leading-relaxed">
-    {description}
-  </p>
-  <div class="flex flex-wrap gap-2 mb-4">
-    {tags.map(tag => (
-      <span class="text-xs px-2 py-1 rounded bg-[var(--color-border)] text-[var(--color-text-secondary)]">
-        {tag}
-      </span>
-    ))}
-  </div>
-  <div class="flex items-center gap-4 text-sm">
-    <a href={href} class="link-accent font-medium">查看详情</a>
-    {github && (
-      <a href={github} class="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
-        GitHub
-      </a>
-    )}
+<article class:list={['project-card', featured && 'project-card--featured']} data-reveal>
+  <a href={href} class="project-card__media" aria-label={`查看 ${title}`}>
+    <img
+      src={image}
+      alt={imageAlt}
+      width="1536"
+      height="1024"
+      loading={featured ? 'eager' : 'lazy'}
+      data-project-art
+    />
+  </a>
+  <div class="project-card__body">
+    <div class="project-card__copy">
+      <h3><a href={href}>{title}</a></h3>
+      <p>{description}</p>
+    </div>
+    <div class="tag-list" aria-label="Technology tags">
+      {tags.slice(0, 4).map(tag => <span>{tag}</span>)}
+    </div>
+    <div class="project-card__actions">
+      <a href={href} class="text-link">查看详情</a>
+      {github && (
+        <a href={github} class="text-link text-link--muted" target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+      )}
+    </div>
   </div>
 </article>
