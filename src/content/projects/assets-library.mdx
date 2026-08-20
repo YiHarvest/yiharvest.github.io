@@ -1,0 +1,69 @@
+---
+title: Assets Library
+description: 面向内部团队的多模态素材中枢，统一处理图片与视频的上传、分镜、视觉分析、私有存储和语义检索。
+descriptionEn: A multimodal asset hub for internal teams, unifying ingestion, scene detection, visual analysis, private storage, and semantic search.
+tags: ['Next.js 15', 'TypeScript', 'FastAPI', 'PySceneDetect', 'VLM', 'Chroma']
+image: '/images/projects/assets-library.webp'
+imageAlt: '被搜索镜头组织起来的图像与视频素材集合'
+imageAltEn: 'A collection of image and video assets organized through a search lens'
+github: 'https://github.com/YiHarvest/assets-library'
+status: active
+priority: 1
+origin: adapted-fork
+---
+
+<div data-copy-lang="zh" lang="zh-CN">
+
+## 问题
+
+图片和视频进入团队工作流之后，上传、校验、分镜、模型分析、标签、存储与检索往往散落在不同工具中。Assets Library 把这些步骤收进一个面向可信内网的素材中枢，并保留逐项进度、失败状态和作用域。
+
+## 工作流
+
+批量上传先进入本地 staging 和完整媒体校验。视频由独立的 `scene-detect-service` 异步分镜，使用 PySceneDetect 与 FFmpeg 精确切片；支持 NVIDIA NVENC 加速，探测失败时回退 CPU。分镜和图片随后交给 OpenAI-compatible VLM 生成描述与结构化标签，分析结果写入 MySQL，并同步到 Chroma 供语义检索。
+
+## 架构
+
+- Next.js 15、React 19 与 TypeScript 提供管理界面和 Route Handlers
+- MySQL 8.4 与 Drizzle ORM 负责关系数据、迁移和可靠异步作业
+- FastAPI、PySceneDetect 与 FFmpeg 负责可恢复的视频分镜服务
+- 私有 ZOS/S3 存储父视频、分片、图片与缩略图
+- Chroma 提供受素材作用域约束的向量检索
+
+## 可靠性设计
+
+视频入库使用补偿式 Saga。只有全部对象上传并校验完成后，才在单个 MySQL 事务中创建整批记录；中途失败会等待在途上传结束，并删除已写入的对象。作业通过数据库租约领取，任务支持失败重试、状态轮询和服务重启恢复。开发与生产数据库目标由启动流程和 Drizzle CLI 共同执行硬隔离。
+
+## 当前边界
+
+这是基于上游项目深度改造的 fork，当前面向可信内网，没有内置登录或 API Key 鉴权，不应直接暴露到公网。完整运行依赖 MySQL、Chroma、S3-compatible 存储、模型服务和 FFmpeg。
+
+</div>
+
+<div data-copy-lang="en" lang="en">
+
+## Problem
+
+Once images and video enter a team workflow, ingestion, validation, scene detection, model analysis, metadata, storage, and retrieval are often split across tools. Assets Library brings these steps into one hub for a trusted internal network, with item-level progress, failure states, and explicit scope.
+
+## Workflow
+
+Batch uploads first enter local staging and full media validation. Video is segmented asynchronously by `scene-detect-service` using PySceneDetect and FFmpeg, with NVIDIA NVENC acceleration and CPU fallback. Scenes and images then go to an OpenAI-compatible VLM for descriptions and structured tags. Results are stored in MySQL and indexed in Chroma for semantic retrieval.
+
+## Architecture
+
+- Next.js 15, React 19, and TypeScript provide the management interface and Route Handlers
+- MySQL 8.4 and Drizzle ORM manage relational data, migrations, and reliable asynchronous jobs
+- FastAPI, PySceneDetect, and FFmpeg power a recoverable scene-detection service
+- Private ZOS/S3 storage holds source video, segments, images, and thumbnails
+- Chroma provides vector retrieval constrained by asset scope
+
+## Reliability
+
+Video ingestion uses a compensating Saga. The batch is committed in one MySQL transaction only after every object is uploaded and validated. A failure waits for in-flight uploads and removes completed objects. Database leases drive job claiming, while tasks support retries, polling, and restart recovery. Startup code and the Drizzle CLI enforce hard separation between development and production databases.
+
+## Current limits
+
+This repository is an extensively adapted fork. It targets a trusted internal network and has no built-in login or API-key layer, so it should not be exposed directly to the public internet. A complete deployment depends on MySQL, Chroma, S3-compatible storage, model services, and FFmpeg.
+
+</div>

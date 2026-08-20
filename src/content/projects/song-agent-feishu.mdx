@@ -1,0 +1,60 @@
+---
+title: Song Agent
+description: 安全、可插拔的 Intent 执行框架，让 API、Agent 工具、操作确认和调度任务共享同一个执行内核。
+descriptionEn: A secure, pluggable intent-execution framework sharing one kernel across APIs, agent tools, confirmations, and scheduled jobs.
+tags: ['Python', 'FastAPI', 'Feishu', 'Agent Runtime', 'SQLAlchemy']
+image: '/images/projects/song-agent-feishu.webp'
+imageAlt: '由统一执行内核连接多个透明通道的系统结构'
+imageAltEn: 'A system structure connecting transparent channels through one execution kernel'
+github: 'https://github.com/YiHarvest/song-agent-feishu'
+status: active
+priority: 3
+---
+
+<div data-copy-lang="zh" lang="zh-CN">
+
+## 问题
+
+很多 Agent 应用在自然语言入口、HTTP API、工具调用、操作确认和定时任务中维护多套执行逻辑。权限、参数校验和错误恢复因此容易漂移。Song Agent 不是音乐生成项目，而是一个通用 Intent 执行框架。
+
+## 单一执行内核
+
+只有“不确定要做什么”时才调用 Router。已经知道 Intent 的 API、Agent Tool、确认操作与 Scheduler 会绕过重复的 LLM 路由，直接进入同一个 Dispatcher。`IntentCatalog` 是元数据的唯一事实来源，同时生成路由候选和 Agent 工具列表。
+
+## 安全路径
+
+删除、覆盖和批量操作进入可确认的 Action 状态机。确认接口只接收 `action_id`，原始 Intent、身份、权限、参数、目标和 Payload Hash 都从数据库重新加载并验证。状态机覆盖执行中、成功、失败和结果未知，并提供幂等与 reconcile 路径。
+
+## 适配与模块
+
+系统同时提供 OpenAI-compatible API、飞书 Channel、用户 OAuth 与 Workspace 适配。会话、长期记忆、计划、任务、日历、文档、搜索、附件和持久化调度都通过模块贡献 Intent，而不是绕过内核添加另一套业务路由。
+
+## 当前边界
+
+v1 不兼容旧数据库 Schema，也不自动导入旧 JSON。当前使用单个 AEAD 主密钥，尚未实现密钥轮换。仓库未声明许可证，因此这里只称为公开仓库，不把它标记为可自由再分发的开源项目。
+
+</div>
+
+<div data-copy-lang="en" lang="en">
+
+## Problem
+
+Many agent applications maintain separate execution logic for natural-language entry, HTTP APIs, tool calls, confirmations, and scheduled jobs. Permissions, validation, and recovery then drift apart. Song Agent is not a music project; it is a general intent-execution framework.
+
+## One execution kernel
+
+The Router is used only when the system does not yet know what to do. APIs, agent tools, confirmations, and scheduled jobs with a known intent bypass repeated LLM routing and enter the same Dispatcher. `IntentCatalog` is the single source of truth for metadata, routing candidates, and agent tools.
+
+## Safety path
+
+Deletes, overwrites, and batch operations enter a confirmable Action state machine. Confirmation accepts only an `action_id`; the original intent, identity, permissions, parameters, target, and payload hash are reloaded and verified from storage. The state machine covers execution, success, failure, and unknown outcomes with idempotency and reconciliation paths.
+
+## Adapters and modules
+
+The system exposes an OpenAI-compatible API alongside Feishu channels, user OAuth, and workspace adapters. Conversation, long-term memory, planning, tasks, calendars, documents, search, attachments, and persistent scheduling contribute intents as modules rather than creating a second execution path.
+
+## Current limits
+
+Version 1 is incompatible with the previous database schema and does not import older JSON automatically. It currently uses one AEAD master key without rotation. The repository has no declared license, so this site describes it as a public repository rather than claiming redistribution rights.
+
+</div>

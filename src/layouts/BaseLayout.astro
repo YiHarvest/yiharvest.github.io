@@ -3,44 +3,157 @@ import '../styles/global.css';
 
 interface Props {
   title: string;
+  titleEn?: string;
   description?: string;
+  descriptionEn?: string;
   image?: string;
 }
 
 const {
   title,
-  description = 'AI Agent & Applied Machine Learning Engineer',
-  image = '/images/projects/search-engine-tool-mcp.webp',
+  titleEn = title,
+  description = '构建可控、可观测、可复用的 AI 基础设施。',
+  descriptionEn = 'Building controllable, observable, and reusable AI infrastructure.',
+  image = '/images/ai-infrastructure-hero.webp',
 } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
 ---
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-language="zh">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <style is:inline>
+      html:not([data-language="en"]) [data-copy-lang="en"],
+      html[data-language="en"] [data-copy-lang="zh"] { display: none !important; }
+    </style>
+    <script is:inline>
+      (() => {
+        let language = 'zh';
+        try {
+          if (localStorage.getItem('yiharvest:language') === 'en') language = 'en';
+        } catch {}
+        document.documentElement.dataset.language = language;
+        document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
+      })();
+    </script>
+    <meta
+      name="description"
+      content={description}
+      data-meta-i18n
+      data-zh={description}
+      data-en={descriptionEn}
+    />
     <meta name="theme-color" content="#f3f6f4" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={`${title} | YiHarvest`} />
-    <meta property="og:description" content={description} />
+    <meta
+      property="og:title"
+      content={`${title} | YiHarvest`}
+      data-meta-i18n
+      data-zh={`${title} | YiHarvest`}
+      data-en={`${titleEn} | YiHarvest`}
+    />
+    <meta
+      property="og:description"
+      content={description}
+      data-meta-i18n
+      data-zh={description}
+      data-en={descriptionEn}
+    />
+    <meta property="og:locale" content="zh_CN" data-og-locale />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} | YiHarvest</title>
+    <title data-title-i18n data-zh={`${title} | YiHarvest`} data-en={`${titleEn} | YiHarvest`}>
+      {title} | YiHarvest
+    </title>
     <script is:inline>
-      const storedTheme = localStorage.getItem('theme');
+      let storedTheme = null;
+      try { storedTheme = localStorage.getItem('theme'); } catch {}
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       document.documentElement.classList.toggle('dark', storedTheme ? storedTheme === 'dark' : prefersDark);
     </script>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('enhanced');
+
+        const applyLanguage = (language) => {
+          const next = language === 'en' ? 'en' : 'zh';
+          root.dataset.language = next;
+          root.lang = next === 'en' ? 'en' : 'zh-CN';
+
+          const title = document.querySelector('[data-title-i18n]');
+          if (title) document.title = title.dataset[next] || document.title;
+
+          document.querySelectorAll('[data-meta-i18n]').forEach((meta) => {
+            const value = meta.dataset[next];
+            if (value) meta.setAttribute('content', value);
+          });
+
+          const locale = document.querySelector('[data-og-locale]');
+          locale?.setAttribute('content', next === 'en' ? 'en_US' : 'zh_CN');
+
+          document.querySelectorAll('[data-i18n-attr]').forEach((element) => {
+            const attribute = element.dataset.i18nAttr;
+            const value = element.dataset[next];
+            if (attribute && value) element.setAttribute(attribute, value);
+          });
+
+          document.querySelectorAll('[data-language-toggle]').forEach((button) => {
+            button.setAttribute('aria-label', next === 'en' ? '切换到中文' : 'Switch to English');
+          });
+
+          document.dispatchEvent(new CustomEvent('yiharvest:languagechange', { detail: { language: next } }));
+        };
+
+        window.setYiharvestLanguage = (language) => {
+          applyLanguage(language);
+          try { localStorage.setItem('yiharvest:language', language); } catch {}
+        };
+
+        window.addEventListener('storage', (event) => {
+          if (event.key === 'yiharvest:language' && event.newValue) applyLanguage(event.newValue);
+        });
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            applyLanguage(root.dataset.language);
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const elements = document.querySelectorAll('[data-enter]');
+
+            if (reducedMotion || !('IntersectionObserver' in window)) {
+              elements.forEach((element) => element.classList.add('is-visible'));
+              return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              });
+            }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
+
+            elements.forEach((element) => observer.observe(element));
+          });
+        } else {
+          applyLanguage(root.dataset.language);
+        }
+      })();
+    </script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">
+      <span data-copy-lang="zh">跳到主要内容</span>
+      <span data-copy-lang="en">Skip to content</span>
+    </a>
     <slot name="navigation" />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <slot name="footer" />

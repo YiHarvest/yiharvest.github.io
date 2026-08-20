@@ -1,0 +1,53 @@
+---
+title: DSH Failure Capsule
+description: DeepSeek Harness 的本地优先故障证据插件，将失败上下文整理为经过脱敏、可离线检查的证据包。
+descriptionEn: A local-first DeepSeek Harness plugin that packages failures into redacted, offline-inspectable evidence capsules.
+tags: ['TypeScript', 'DeepSeek Harness', 'Observability', 'Incident Response']
+image: '/images/projects/dsh-failure-capsule.webp'
+imageAlt: '封存结构化故障证据的深绿色透明胶囊'
+imageAltEn: 'A deep-green transparent capsule containing structured failure evidence'
+github: 'https://github.com/YiHarvest/dsh-failure-capsule'
+docs: 'https://www.npmjs.com/package/dsh-failure-capsule'
+status: active
+priority: 2
+---
+
+<div data-copy-lang="zh" lang="zh-CN">
+
+## 问题
+
+AI 编码会话失败时，真正有用的信息散落在工具调用、Agent 状态、Git 工作区、运行环境和压缩后的 JavaScript 栈中。复制最后一条错误消息通常不足以复现，也容易在分享时泄露本机路径或凭据。
+
+## 证据包
+
+DSH Failure Capsule 监听工具错误、失败或阻塞回合以及运行时 Agent 错误，并在本地生成一个结构化 ZIP。证据包包含时间线、Git 状态、运行环境、插件组合、失败身份和经过 source map 还原的源码位置。
+
+## 隐私与确定性
+
+生成过程不上传数据，也不调用模型做诊断。导出副本会对敏感字段、常见 Token、私钥和本机路径执行脱敏。插件聚焦确定性证据采集，把根因判断留给人和后续工具。
+
+## 使用边界
+
+当前 npm 与 GitHub Release 为 `v0.2.1`，已针对 `@deepseek-ai/dsh@0.1.0-rc.7` 验证。自动脱敏不能保证移除全部业务秘密，分享证据包前仍应人工检查。
+
+</div>
+
+<div data-copy-lang="en" lang="en">
+
+## Problem
+
+When an AI coding session fails, useful evidence is scattered across tool calls, agent state, the Git worktree, runtime details, and minified JavaScript stacks. Copying the final error rarely reproduces the failure and may expose local paths or credentials when shared.
+
+## The capsule
+
+DSH Failure Capsule observes tool errors, failed or blocked turns, and runtime agent errors, then produces a structured ZIP locally. The capsule includes a timeline, Git evidence, runtime details, the plugin set, failure identity, and source positions recovered through local source maps.
+
+## Privacy and determinism
+
+The export never uploads data and does not call a model for diagnosis. It redacts common credential fields, tokens, private keys, and local paths in the exported copy. The plugin focuses on deterministic evidence collection and leaves root-cause analysis to people and downstream tools.
+
+## Limits
+
+The current npm and GitHub release is `v0.2.1`, verified against `@deepseek-ai/dsh@0.1.0-rc.7`. Automated redaction cannot guarantee removal of every business secret, so capsules still require review before sharing.
+
+</div>

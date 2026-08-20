@@ -12,23 +12,28 @@ const sortedNotes = notes.sort((a, b) =>
 ---
 
 <BaseLayout
-  title="Notes"
-  description="关于 AI Agent、研究工具和构建过程的笔记。"
+  title="笔记"
+  titleEn="Notes"
+  description="关于 AI 系统、开发者工具和工程过程的笔记。"
+  descriptionEn="Notes on AI systems, developer tools, and the engineering process."
   image="/images/editorial-texture.webp"
 >
   <Navigation slot="navigation" />
 
   <header class="notes-hero">
     <div class="notes-hero__inner">
-      <div class="notes-hero__copy" data-reveal>
-        <p class="eyebrow">Notes</p>
-        <h1>过程中的判断与记录。</h1>
-        <p>关于 AI Agent、研究方法、工具设计，以及把想法变成可靠系统的过程。</p>
+      <div class="notes-hero__copy" data-enter>
+        <p class="eyebrow"><span data-copy-lang="zh">笔记</span><span data-copy-lang="en">Notes</span></p>
+        <h1><span data-copy-lang="zh">过程中的判断与记录。</span><span data-copy-lang="en">Decisions and notes from the work.</span></h1>
+        <p><span data-copy-lang="zh">关于 Agent 架构、工具设计、可靠性，以及把想法变成可运行系统的过程。</span><span data-copy-lang="en">Agent architecture, tool design, reliability, and the process of turning ideas into working systems.</span></p>
       </div>
-      <figure class="editorial-art" data-page-art="notes" data-reveal>
+      <figure class="editorial-art" data-page-art="notes" data-enter>
         <img
           src="/images/editorial-texture.webp"
-          alt="Abstract research material with forest-green filaments"
+          alt="带有深绿色纤维的抽象研究材料"
+          data-i18n-attr="alt"
+          data-zh="带有深绿色纤维的抽象研究材料"
+          data-en="Abstract research material with forest-green filaments"
           width="1536"
           height="1024"
         />
@@ -38,21 +43,22 @@ const sortedNotes = notes.sort((a, b) =>
 
   <Section class="section--compact">
     {sortedNotes.length === 0 ? (
-      <div class="contact-panel" data-reveal>
-        <h2>新的笔记正在整理。</h2>
+      <div class="contact-panel" data-enter>
+        <h2><span data-copy-lang="zh">新的笔记正在整理。</span><span data-copy-lang="en">New notes are being prepared.</span></h2>
       </div>
     ) : (
       <div class="notes-list">
         {sortedNotes.map(note => (
-          <a href={`/notes/${note.id.replace(/\.mdx$/, '')}`} class="note-row" data-reveal>
+          <a href={`/notes/${note.id.replace(/\.mdx$/, '')}`} class="note-row" data-enter>
             <time datetime={new Date(note.data.publishedAt).toISOString()}>
-              {new Date(note.data.publishedAt).toLocaleDateString('zh-CN')}
+              <span data-copy-lang="zh">{new Date(note.data.publishedAt).toLocaleDateString('zh-CN')}</span>
+              <span data-copy-lang="en">{new Date(note.data.publishedAt).toLocaleDateString('en-US')}</span>
             </time>
             <div>
-              <h2>{note.data.title}</h2>
-              {note.data.description && <p>{note.data.description}</p>}
+              <h2><span data-copy-lang="zh">{note.data.title}</span><span data-copy-lang="en">{note.data.titleEn}</span></h2>
+              {note.data.description && note.data.descriptionEn && <p><span data-copy-lang="zh">{note.data.description}</span><span data-copy-lang="en">{note.data.descriptionEn}</span></p>}
             </div>
-            <span class="note-row__action">阅读</span>
+            <span class="note-row__action"><span data-copy-lang="zh">阅读</span><span data-copy-lang="en">Read</span></span>
           </a>
         ))}
       </div>

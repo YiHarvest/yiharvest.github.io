@@ -1,45 +1,61 @@
 ---
 title: Search Engine Tool MCP
-description: A secure, multi-provider web search and extraction MCP server for Codex, Trae, and other MCP-compatible clients.
-tags: ['Python', 'FastMCP', 'DDGS', 'SearXNG', 'Tavily']
+description: 面向 AI 客户端的 Python MCP 搜索服务，提供零配置网页搜索、安全内容提取和可选的多提供商接入。
+descriptionEn: A Python MCP server for zero-config web search, safety-bounded extraction, and optional multi-provider access.
+tags: ['Python', 'MCP', 'DDGS', 'SearXNG', 'HTTPX']
 image: '/images/projects/search-engine-tool-mcp.webp'
-imageAlt: 'Search Engine Tool MCP interface mockup'
+imageAlt: 'Search Engine Tool MCP 的搜索与内容提取界面'
+imageAltEn: 'Search and content extraction view for Search Engine Tool MCP'
 github: 'https://github.com/YiHarvest/search-engine-tool-mcp'
 pypi: 'https://pypi.org/project/search-engine-tool-mcp/'
+status: active
+priority: 4
 ---
 
-## 背景
+<div data-copy-lang="zh" lang="zh-CN">
 
-在 AI Agent 开发中，搜索能力是许多工作流的核心需求。然而，现有的搜索工具往往缺乏统一接口、安全校验机制不够完善，或者难以适配不同的搜索引擎 Provider。
+## 问题
 
-## 技术架构
+AI 客户端通常需要两种开放网络能力：找到相关页面，以及安全地提取页面正文。不同搜索提供商的认证、返回格式和失败行为各不相同，本地抓取还必须处理 SSRF、重定向和超大响应。
 
-本项目基于 FastMCP 构建，实现了多 Provider 抽象层：
+## 两个清晰工具
 
-- **DDGS**: DuckDuckGo 搜索，无需 API Key
-- **SearXNG**: 自托管元搜索引擎
-- **Tavily**: 专为 AI Agent 优化的搜索 API
-- **You.com**: 商业搜索 API
-- **TalorData**: 结构化数据检索
+MCP 接口只暴露 `web_search` 与 `web_extract`。DDGS 搜索和本地正文提取无需 API Key；需要更多能力时，可以配置 SearXNG、TalorData、You.com 或 Tavily。自动路由保持固定和可预测，优先使用已配置的 SearXNG，失败后回退到 DDGS。
 
-## 关键特性
+## 提取安全
 
-### 安全设计
+本地提取在连接前执行 DNS 感知的 SSRF 检查，并对每次重定向重新校验目标。HTTP 响应有大小上限，解析层使用 Trafilatura 与 Beautiful Soup 提取可读正文，避免把任意网络响应直接交给 Agent。
 
-- SSRF 校验：防止服务器端请求伪造
-- 重定向校验：限制跳转次数和目标域名
-- 响应大小限制：防止内存溢出
+## 分发
 
-### 自动回退策略
+项目以 `search-engine-tool-mcp` 发布到 PyPI，可作为 Python 包安装，也可通过 `uvx` 直接作为 MCP 服务运行。当前版本为 `0.5.0`，项目分类为 Beta。
 
-当主 Provider 失败时，自动切换到备用 Provider，确保搜索服务的可用性。
+## 当前边界
 
-### 分发
+本地提取不执行 JavaScript，不能绕过登录墙、付费墙或 CAPTCHA。商业提供商需要显式凭据，也不会自动加入免费搜索的回退链。多提供商支持改善可选择性，但不构成可用性保证。
 
-通过 PyPI 发布，支持 `pip install` 和 `uvx` 直接运行。
+</div>
 
-## 成果
+<div data-copy-lang="en" lang="en">
 
-- 发布至 PyPI，可通过 `pip install search-engine-tool-mcp` 安装
-- 支持 Codex、Trae 等 MCP 客户端
-- 完整的类型提示和文档
+## Problem
+
+AI clients generally need two open-web capabilities: finding relevant pages and extracting readable content safely. Search providers differ in authentication, response shape, and failure behavior, while local fetching must also handle SSRF, redirects, and oversized responses.
+
+## Two focused tools
+
+The MCP surface exposes only `web_search` and `web_extract`. DDGS search and local extraction require no API key. SearXNG, TalorData, You.com, and Tavily can be configured when needed. Automatic routing remains deterministic: a configured SearXNG instance is tried first, followed by DDGS on failure.
+
+## Extraction safety
+
+Local extraction performs DNS-aware SSRF checks before connecting and validates every redirect target again. Responses are size-bounded, while Trafilatura and Beautiful Soup extract readable content instead of handing arbitrary network responses directly to an agent.
+
+## Distribution
+
+The project is published to PyPI as `search-engine-tool-mcp`. It can be installed as a Python package or launched directly as an MCP server with `uvx`. The current version is `0.5.0` and is classified as Beta.
+
+## Current limits
+
+Local extraction does not execute JavaScript and cannot bypass authentication, paywalls, or CAPTCHA. Commercial providers require explicit credentials and do not silently enter the free-search fallback chain. Multi-provider support offers choice, not a guarantee of availability.
+
+</div>

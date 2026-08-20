@@ -9,43 +9,68 @@ import ProjectGrid from '../components/ProjectGrid.astro';
 
 const featuredProjects = [
   {
+    title: 'Assets Library',
+    description: '面向内部团队的多模态素材中枢，统一处理图片与视频的上传、分镜、视觉分析、私有存储和语义检索。',
+    descriptionEn: 'A multimodal asset hub unifying ingestion, scene detection, visual analysis, private storage, and semantic search.',
+    tags: ['Next.js', 'TypeScript', 'FastAPI', 'VLM'],
+    href: '/projects/assets-library',
+    github: 'https://github.com/YiHarvest/assets-library',
+    image: '/images/projects/assets-library.webp',
+    imageAlt: '被搜索镜头组织起来的图像与视频素材集合',
+    imageAltEn: 'A collection of image and video assets organized through a search lens',
+    origin: 'adapted-fork' as const,
+  },
+  {
+    title: 'DSH Failure Capsule',
+    description: 'DeepSeek Harness 的本地优先故障证据插件，将失败上下文整理为经过脱敏、可离线检查的证据包。',
+    descriptionEn: 'A local-first DeepSeek Harness plugin that packages failures into redacted, offline-inspectable evidence capsules.',
+    tags: ['TypeScript', 'DSH Plugin', 'Observability'],
+    href: '/projects/dsh-failure-capsule',
+    github: 'https://github.com/YiHarvest/dsh-failure-capsule',
+    image: '/images/projects/dsh-failure-capsule.webp',
+    imageAlt: '封存结构化故障证据的深绿色透明胶囊',
+    imageAltEn: 'A deep-green transparent capsule containing structured failure evidence',
+  },
+  {
+    title: 'Song Agent',
+    description: '安全、可插拔的 Intent 执行框架，让 API、Agent 工具、操作确认和调度任务共享同一个执行内核。',
+    descriptionEn: 'A secure intent-execution framework sharing one kernel across APIs, agent tools, confirmations, and scheduled jobs.',
+    tags: ['Python', 'FastAPI', 'Feishu', 'Agent Runtime'],
+    href: '/projects/song-agent-feishu',
+    github: 'https://github.com/YiHarvest/song-agent-feishu',
+    image: '/images/projects/song-agent-feishu.webp',
+    imageAlt: '由统一执行内核连接多个透明通道的系统结构',
+    imageAltEn: 'A system structure connecting transparent channels through one execution kernel',
+  },
+  {
     title: 'Search Engine Tool MCP',
-    description: 'A secure, multi-provider web search and extraction MCP server for Codex, Trae, and other MCP-compatible clients.',
-    tags: ['Python', 'FastMCP', 'DDGS', 'SearXNG'],
+    description: '面向 AI 客户端的 Python MCP 搜索服务，提供零配置网页搜索、安全内容提取和多提供商接入。',
+    descriptionEn: 'A Python MCP server for zero-config web search, safety-bounded extraction, and optional multi-provider access.',
+    tags: ['Python', 'MCP', 'DDGS', 'SearXNG'],
     href: '/projects/search-engine-tool-mcp',
     github: 'https://github.com/YiHarvest/search-engine-tool-mcp',
     image: '/images/projects/search-engine-tool-mcp.webp',
-    imageAlt: 'Search Engine Tool MCP interface mockup',
-  },
-  {
-    title: 'PPT Design',
-    description: 'A Codex plugin for creating animated HTML presentations and genuinely editable PowerPoint decks.',
-    tags: ['Codex Plugin', 'HTML Slides', 'PPTX'],
-    href: '/projects/ppt-design',
-    github: 'https://github.com/YiHarvest/ppt-design',
-    image: '/images/projects/ppt-design.webp',
-    imageAlt: 'PPT Design presentation editor interface mockup',
-  },
-  {
-    title: 'HemoPain',
-    description: 'Biomedical machine learning for chronic pain classification using blood biomarkers and clinical variables.',
-    tags: ['Machine Learning', 'Biomedical', 'Bootstrap'],
-    href: '/projects/hemopain',
-    github: 'https://github.com/YiHarvest/hemopain',
-    image: '/images/projects/hemopain.webp',
-    imageAlt: 'HemoPain biomedical analytics interface mockup',
+    imageAlt: 'Search Engine Tool MCP 的搜索与内容提取界面',
+    imageAltEn: 'Search and content extraction view for Search Engine Tool MCP',
   },
 ];
 ---
 
-<BaseLayout title="YiHarvest">
+<BaseLayout
+  title="YiHarvest"
+  titleEn="YiHarvest"
+  description="构建可控、可观测、可复用的 AI 基础设施，连接多模态内容、Agent 执行、故障诊断与开放网络。"
+  descriptionEn="Building controllable, observable, and reusable AI infrastructure for multimodal content, agent execution, failure diagnostics, and the open web."
+>
   <Navigation slot="navigation" />
 
   <Hero />
 
   <Section
-    title="Selected work"
-    description="为真实研究与创作流程构建的工具。每个项目都从一个明确问题开始。"
+    title="重点项目"
+    titleEn="Featured systems"
+    description="从内容进入系统，到工具执行、故障取证和开放网络访问，每个项目都解决一段真实工作流。"
+    descriptionEn="From content ingestion to execution, failure evidence, and web access, each project solves a real part of the workflow."
     id="projects"
   >
     <ProjectGrid>
@@ -56,37 +81,41 @@ const featuredProjects = [
   </Section>
 
   <Section
-    title="Research interests"
-    description="技术选择服务于问题，而不是反过来。"
-    id="research"
+    title="一个系统，而不是一组演示"
+    titleEn="One system, not a set of demos"
+    description="当前工作围绕四个相互连接的工程问题展开。"
+    descriptionEn="The current work connects four engineering problems that belong together."
+    id="focus"
   >
-    <div class="capability-grid">
-      <article class="capability" data-reveal>
-        <h3 class="capability__title">Biomedical ML</h3>
-        <p class="capability__body">关注可解释性、校准与临床实用性，让模型输出经得起真实研究语境。</p>
+    <div class="focus-map">
+      <article class="focus-item" data-enter>
+        <h3><span data-copy-lang="zh">内容进入</span><span data-copy-lang="en">Content in</span></h3>
+        <p><span data-copy-lang="zh">处理图片、视频、网页与附件，同时保留来源、边界和作用域。</span><span data-copy-lang="en">Ingest images, video, web pages, and attachments while preserving provenance and scope.</span></p>
       </article>
-      <article class="capability" data-reveal>
-        <h3 class="capability__title">Knowledge Graph</h3>
-        <p class="capability__body">组织复杂知识，支持检索、推理与可追溯决策。</p>
+      <article class="focus-item" data-enter>
+        <h3><span data-copy-lang="zh">意图执行</span><span data-copy-lang="en">Intent execution</span></h3>
+        <p><span data-copy-lang="zh">已知意图直接进入统一内核，高风险操作有确认、幂等和恢复路径。</span><span data-copy-lang="en">Known intents enter one kernel with confirmation, idempotency, and recovery for risky actions.</span></p>
       </article>
-      <article class="capability" data-reveal>
-        <h3 class="capability__title">Agent Workflows</h3>
-        <p class="capability__body">把工具调用、验证和交付串成可靠自动化流程。</p>
+      <article class="focus-item" data-enter>
+        <h3><span data-copy-lang="zh">失败可见</span><span data-copy-lang="en">Failures visible</span></h3>
+        <p><span data-copy-lang="zh">把运行环境、时间线和错误身份收进可复查的本地证据包。</span><span data-copy-lang="en">Capture runtime, timeline, and failure identity in a reviewable local evidence package.</span></p>
+      </article>
+      <article class="focus-item" data-enter>
+        <h3><span data-copy-lang="zh">结果可追溯</span><span data-copy-lang="en">Results traceable</span></h3>
+        <p><span data-copy-lang="zh">搜索、提取与模型调用都需要明确来源和可验证的安全边界。</span><span data-copy-lang="en">Search, extraction, and model calls keep explicit sources and verifiable safety boundaries.</span></p>
       </article>
     </div>
   </Section>
 
   <Section id="contact" class="section--compact">
-    <div class="contact-panel" data-reveal>
-      <h2>一起做有用的东西。</h2>
+    <div class="contact-panel" data-enter>
+      <div>
+        <h2><span data-copy-lang="zh">查看代码、边界与工程选择。</span><span data-copy-lang="en">See the code, constraints, and engineering decisions.</span></h2>
+        <p><span data-copy-lang="zh">公开仓库保留实现细节、验证方式和当前限制。</span><span data-copy-lang="en">Public repositories document implementation details, verification, and current limitations.</span></p>
+      </div>
       <div class="contact-panel__action">
-        <a
-          href="https://github.com/YiHarvest"
-          class="button button--primary"
-          target="_blank"
-          rel="noreferrer"
-        >
-          访问 GitHub
+        <a href="https://github.com/YiHarvest" class="button button--primary" target="_blank" rel="noreferrer">
+          <span data-copy-lang="zh">访问 GitHub</span><span data-copy-lang="en">Open GitHub</span>
         </a>
       </div>
     </div>

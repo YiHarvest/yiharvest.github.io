@@ -8,18 +8,21 @@ import ProjectGrid from '../../components/ProjectGrid.astro';
 import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects');
-const orderedProjects = projects.sort((a, b) =>
-  a.data.title === 'Search Engine Tool MCP' ? -1 : b.data.title === 'Search Engine Tool MCP' ? 1 : 0
-);
+const orderedProjects = projects.sort((a, b) => a.data.priority - b.data.priority);
 ---
 
-<BaseLayout title="Projects" description="YiHarvest 的 AI Agent、研究工具与自动化项目。">
+<BaseLayout
+  title="项目"
+  titleEn="Projects"
+  description="YiHarvest 的 AI 基础设施、Agent 执行、故障诊断与开发者工具。"
+  descriptionEn="AI infrastructure, agent execution, failure diagnostics, and developer tools by YiHarvest."
+>
   <Navigation slot="navigation" />
 
   <header class="page-intro">
-    <div class="page-intro__inner" data-reveal>
-      <h1>Projects</h1>
-      <p class="page-intro__lede">从搜索基础设施到生物医学模型，项目围绕可靠性、可解释性与实际使用展开。</p>
+    <div class="page-intro__inner" data-enter>
+      <h1><span data-copy-lang="zh">项目</span><span data-copy-lang="en">Projects</span></h1>
+      <p class="page-intro__lede"><span data-copy-lang="zh">从多模态内容进入系统，到可靠执行、故障取证和开放网络访问。</span><span data-copy-lang="en">From multimodal ingestion to reliable execution, failure evidence, and open-web access.</span></p>
     </div>
   </header>
 
@@ -29,12 +32,15 @@ const orderedProjects = projects.sort((a, b) =>
         <ProjectCard
           title={project.data.title}
           description={project.data.description}
+          descriptionEn={project.data.descriptionEn}
           tags={project.data.tags}
           href={`/projects/${project.id.replace(/\.mdx$/, '')}`}
           image={project.data.image}
           imageAlt={project.data.imageAlt}
+          imageAltEn={project.data.imageAltEn}
           github={project.data.github}
           featured={index === 0}
+          origin={project.data.origin}
         />
       ))}
     </ProjectGrid>
