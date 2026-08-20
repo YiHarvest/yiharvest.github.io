@@ -22,29 +22,34 @@ const { Content } = await render(project);
 
 <BaseLayout
   title={project.data.title}
+  titleEn={project.data.title}
   description={project.data.description}
+  descriptionEn={project.data.descriptionEn}
   image={project.data.image}
 >
   <Navigation slot="navigation" />
 
   <header class="project-hero">
     <div class="project-hero__inner">
-      <div class="project-hero__header" data-reveal>
+      <div class="project-hero__header" data-enter>
         <h1>{project.data.title}</h1>
-        <p>{project.data.description}</p>
+        <p><span data-copy-lang="zh">{project.data.description}</span><span data-copy-lang="en">{project.data.descriptionEn}</span></p>
       </div>
 
-      <figure class="project-hero__image" data-reveal>
+      <figure class="project-hero__image" data-enter>
         <img
           src={project.data.image}
           alt={project.data.imageAlt}
+          data-i18n-attr="alt"
+          data-zh={project.data.imageAlt}
+          data-en={project.data.imageAltEn}
           width="1536"
           height="1024"
           fetchpriority="high"
         />
       </figure>
 
-      <div class="project-meta" data-reveal>
+      <div class="project-meta" data-enter>
         <div class="tag-list" aria-label="Technology tags">
           {project.data.tags.map(tag => <span>{tag}</span>)}
         </div>
@@ -56,7 +61,7 @@ const { Content } = await render(project);
             <a href={project.data.pypi} class="text-link" target="_blank" rel="noreferrer">PyPI</a>
           )}
           {project.data.docs && (
-            <a href={project.data.docs} class="text-link" target="_blank" rel="noreferrer">文档</a>
+            <a href={project.data.docs} class="text-link" target="_blank" rel="noreferrer"><span data-copy-lang="zh">文档</span><span data-copy-lang="en">Docs</span></a>
           )}
         </div>
       </div>
@@ -65,7 +70,7 @@ const { Content } = await render(project);
 
   <article class="article-shell">
     <aside class="article-aside">
-      <p>Project notes<br />Architecture, decisions, and outcomes.</p>
+      <p><span data-copy-lang="zh">项目说明<br />问题、架构、可靠性与边界。</span><span data-copy-lang="en">Project notes<br />Problem, architecture, reliability, and limits.</span></p>
     </aside>
     <div class="rich-text">
       <Content />

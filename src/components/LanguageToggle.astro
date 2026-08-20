@@ -1,0 +1,18 @@
+<button
+  type="button"
+  class="language-toggle"
+  data-language-toggle
+  aria-label="Switch to English"
+>
+  <span data-copy-lang="zh" aria-hidden="true">EN</span>
+  <span data-copy-lang="en" aria-hidden="true">中文</span>
+</button>
+
+<script>
+  const languageToggle = document.querySelector<HTMLButtonElement>('[data-language-toggle]');
+
+  languageToggle?.addEventListener('click', () => {
+    const nextLanguage = document.documentElement.dataset.language === 'en' ? 'zh' : 'en';
+    window.setYiharvestLanguage?.(nextLanguage);
+  });
+</script>

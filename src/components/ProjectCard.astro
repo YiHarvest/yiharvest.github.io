@@ -2,31 +2,47 @@
 interface Props {
   title: string;
   description: string;
+  descriptionEn: string;
   tags: string[];
   href: string;
   image: string;
   imageAlt: string;
+  imageAltEn: string;
   github?: string;
   featured?: boolean;
+  origin?: 'original' | 'adapted-fork';
 }
 
 const {
   title,
   description,
+  descriptionEn,
   tags,
   href,
   image,
   imageAlt,
+  imageAltEn,
   github,
   featured = false,
+  origin = 'original',
 } = Astro.props;
 ---
 
-<article class:list={['project-card', featured && 'project-card--featured']} data-reveal>
-  <a href={href} class="project-card__media" aria-label={`查看 ${title}`}>
+<article class:list={['project-card', featured && 'project-card--featured']} data-enter>
+  <a
+    href={href}
+    class="project-card__media"
+    aria-label={`查看 ${title}`}
+    data-i18n-attr="aria-label"
+    data-zh={`查看 ${title}`}
+    data-en={`View ${title}`}
+  >
     <img
       src={image}
       alt={imageAlt}
+      data-i18n-attr="alt"
+      data-zh={imageAlt}
+      data-en={imageAltEn}
       width="1536"
       height="1024"
       loading={featured ? 'eager' : 'lazy'}
@@ -36,13 +52,25 @@ const {
   <div class="project-card__body">
     <div class="project-card__copy">
       <h3><a href={href}>{title}</a></h3>
-      <p>{description}</p>
+      <p>
+        <span data-copy-lang="zh">{description}</span>
+        <span data-copy-lang="en">{descriptionEn}</span>
+      </p>
     </div>
+    {origin === 'adapted-fork' && (
+      <p class="project-card__origin">
+        <span data-copy-lang="zh">基于上游项目深度改造</span>
+        <span data-copy-lang="en">Extensively adapted from upstream</span>
+      </p>
+    )}
     <div class="tag-list" aria-label="Technology tags">
       {tags.slice(0, 4).map(tag => <span>{tag}</span>)}
     </div>
     <div class="project-card__actions">
-      <a href={href} class="text-link">查看详情</a>
+      <a href={href} class="text-link">
+        <span data-copy-lang="zh">项目详情</span>
+        <span data-copy-lang="en">Project details</span>
+      </a>
       {github && (
         <a href={github} class="text-link text-link--muted" target="_blank" rel="noreferrer">
           GitHub

@@ -22,17 +22,20 @@ const { Content } = await render(note);
 
 <BaseLayout
   title={note.data.title}
+  titleEn={note.data.titleEn}
   description={note.data.description}
+  descriptionEn={note.data.descriptionEn}
   image="/images/editorial-texture.webp"
 >
   <Navigation slot="navigation" />
 
   <header class="note-hero">
-    <div class="note-hero__inner" data-reveal>
+    <div class="note-hero__inner" data-enter>
       <time datetime={new Date(note.data.publishedAt).toISOString()}>
-        {new Date(note.data.publishedAt).toLocaleDateString('zh-CN')}
+        <span data-copy-lang="zh">{new Date(note.data.publishedAt).toLocaleDateString('zh-CN')}</span>
+        <span data-copy-lang="en">{new Date(note.data.publishedAt).toLocaleDateString('en-US')}</span>
       </time>
-      <h1>{note.data.title}</h1>
+      <h1><span data-copy-lang="zh">{note.data.title}</span><span data-copy-lang="en">{note.data.titleEn}</span></h1>
       {note.data.tags && (
         <div class="tag-list" aria-label="Note tags">
           {note.data.tags.map(tag => <span>{tag}</span>)}

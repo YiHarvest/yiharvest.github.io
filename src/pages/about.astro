@@ -6,23 +6,28 @@ import Section from '../components/Section.astro';
 ---
 
 <BaseLayout
-  title="About"
-  description="关于 YiHarvest 的研究方向、工作方式与技术关注。"
+  title="关于"
+  titleEn="About"
+  description="关于 YiHarvest 当前的工程方向、工作方式与技术判断。"
+  descriptionEn="The current engineering direction, working principles, and technical judgment behind YiHarvest."
   image="/images/editorial-texture.webp"
 >
   <Navigation slot="navigation" />
 
   <header class="about-hero">
     <div class="about-hero__inner">
-      <div class="about-hero__copy" data-reveal>
-        <p class="eyebrow">About YiHarvest</p>
-        <h1>研究问题，也构建工具。</h1>
-        <p>专注 AI Agent、MCP 工具开发和生物医学机器学习。重视可复现性、清晰边界与真实使用体验。</p>
+      <div class="about-hero__copy" data-enter>
+        <p class="eyebrow"><span data-copy-lang="zh">关于 YiHarvest</span><span data-copy-lang="en">About YiHarvest</span></p>
+        <h1><span data-copy-lang="zh">把 AI 能力放进可靠系统。</span><span data-copy-lang="en">Putting AI capability inside reliable systems.</span></h1>
+        <p><span data-copy-lang="zh">当前专注多模态内容基础设施、Agent 执行内核、故障证据与开放网络工具。模型能力只是起点，边界、恢复和可验证性决定系统能否被真正使用。</span><span data-copy-lang="en">Current work spans multimodal infrastructure, agent execution kernels, failure evidence, and open-web tools. Model capability is only the starting point; boundaries, recovery, and verifiability make a system usable.</span></p>
       </div>
-      <figure class="editorial-art" data-page-art="about" data-reveal>
+      <figure class="editorial-art" data-page-art="about" data-enter>
         <img
           src="/images/editorial-texture.webp"
-          alt="Forest-green filaments passing through translucent research materials"
+          alt="穿过半透明研究材料的深绿色纤维"
+          data-i18n-attr="alt"
+          data-zh="穿过半透明研究材料的深绿色纤维"
+          data-en="Forest-green filaments passing through translucent research materials"
           width="1536"
           height="1024"
           fetchpriority="high"
@@ -32,33 +37,37 @@ import Section from '../components/Section.astro';
   </header>
 
   <Section
-    title="How I work"
-    description="不追逐复杂本身。先理解问题，再选择足够好的技术。"
+    title="工作原则"
+    titleEn="How I work"
+    description="不追逐复杂本身。先理解失败方式、信任边界和真实操作路径，再选择技术。"
+    descriptionEn="Start with failure modes, trust boundaries, and real operating paths, then choose the technology."
   >
     <div class="principle-grid">
-      <article class="principle" data-reveal>
-        <h3>Research grounded</h3>
-        <p>从数据来源、评价指标和使用语境开始，而不是从模型名称开始。</p>
+      <article class="principle" data-enter>
+        <h3><span data-copy-lang="zh">证据优先</span><span data-copy-lang="en">Evidence first</span></h3>
+        <p><span data-copy-lang="zh">从来源、数据边界与验收方式开始，而不是从模型名称开始。</span><span data-copy-lang="en">Begin with provenance, data boundaries, and acceptance criteria, not a model name.</span></p>
       </article>
-      <article class="principle" data-reveal>
-        <h3>Systems thinking</h3>
-        <p>把检索、工具调用、安全边界、验证与交付看成一套完整系统。</p>
+      <article class="principle" data-enter>
+        <h3><span data-copy-lang="zh">系统思考</span><span data-copy-lang="en">Systems thinking</span></h3>
+        <p><span data-copy-lang="zh">把输入、路由、执行、确认、恢复和观测看成同一个系统。</span><span data-copy-lang="en">Treat input, routing, execution, confirmation, recovery, and observation as one system.</span></p>
       </article>
-      <article class="principle" data-reveal>
-        <h3>Useful craft</h3>
-        <p>界面、文档和默认值同样属于工程质量。</p>
+      <article class="principle" data-enter>
+        <h3><span data-copy-lang="zh">克制交付</span><span data-copy-lang="en">Useful restraint</span></h3>
+        <p><span data-copy-lang="zh">清楚说明限制。界面、文档、默认值和失败信息都属于工程质量。</span><span data-copy-lang="en">State limits clearly. Interfaces, docs, defaults, and failure messages are engineering quality.</span></p>
       </article>
     </div>
   </Section>
 
   <Section
-    title="Technical focus"
-    description="Python、FastAPI、PyTorch、Docker，以及围绕 MCP 和 Agent 工作流的工具链。"
+    title="技术关注"
+    titleEn="Technical focus"
+    description="TypeScript 与 Python 为主，覆盖 Next.js、FastAPI、MCP、数据与任务系统、模型适配和可观测性。"
+    descriptionEn="Mostly TypeScript and Python across Next.js, FastAPI, MCP, data and job systems, model adapters, and observability."
   >
-    <div class="contact-panel" data-reveal>
-      <h2>查看正在构建的项目。</h2>
+    <div class="contact-panel" data-enter>
+      <h2><span data-copy-lang="zh">查看正在构建的系统。</span><span data-copy-lang="en">Explore the systems in progress.</span></h2>
       <div class="contact-panel__action">
-        <a href="/projects" class="button button--primary">浏览项目</a>
+        <a href="/projects" class="button button--primary"><span data-copy-lang="zh">浏览项目</span><span data-copy-lang="en">Browse projects</span></a>
       </div>
     </div>
   </Section>

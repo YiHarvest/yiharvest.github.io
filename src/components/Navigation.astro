@@ -1,18 +1,32 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import LanguageToggle from './LanguageToggle.astro';
 
 const navLinks = [
-  { href: '/projects', label: 'Projects' },
-  { href: '/about', label: 'About' },
-  { href: '/notes', label: 'Notes' },
+  { href: '/projects', zh: '项目', en: 'Projects' },
+  { href: '/about', zh: '关于', en: 'About' },
+  { href: '/notes', zh: '笔记', en: 'Notes', secondary: true },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="site-nav" aria-label="Primary navigation">
+<nav
+  class="site-nav"
+  aria-label="主要导航"
+  data-i18n-attr="aria-label"
+  data-zh="主要导航"
+  data-en="Primary navigation"
+>
   <div class="site-nav__inner">
-    <a href="/" class="site-brand" aria-label="YiHarvest home">
+    <a
+      href="/"
+      class="site-brand"
+      aria-label="YiHarvest 首页"
+      data-i18n-attr="aria-label"
+      data-zh="YiHarvest 首页"
+      data-en="YiHarvest home"
+    >
       <span class="site-brand__mark" aria-hidden="true">YH</span>
       <span>YiHarvest</span>
     </a>
@@ -23,13 +37,25 @@ const currentPath = Astro.url.pathname;
           href={link.href}
           class:list={[
             'site-nav__link',
+            link.secondary && 'site-nav__link--secondary',
             currentPath.startsWith(link.href) && 'is-active',
           ]}
+          aria-current={currentPath.startsWith(link.href) ? 'page' : undefined}
         >
-          {link.label}
+          <span data-copy-lang="zh">{link.zh}</span>
+          <span data-copy-lang="en">{link.en}</span>
         </a>
       ))}
-      <ThemeToggle />
+      <div
+        class="site-nav__controls"
+        aria-label="显示设置"
+        data-i18n-attr="aria-label"
+        data-zh="显示设置"
+        data-en="Display settings"
+      >
+        <LanguageToggle />
+        <ThemeToggle />
+      </div>
     </div>
   </div>
 </nav>
